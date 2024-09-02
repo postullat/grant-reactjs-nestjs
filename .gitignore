@@ -1,0 +1,14 @@
+/reactjs-frontend/package-lock.json
+/reactjs-frontend/.idea
+/reactjs-frontend/node_modules
+/reactjs-frontend/.pnp
+/reactjs-frontend/build
+/reactjs-frontend/.DS_Store
+/reactjs-frontend/.env.local
+/reactjs-frontend/npm-debug.log*
+
+/nest-backend/node_modules
+/nest-backend/build
+/nest-backend/dist
+/nest-backend/.idea
+

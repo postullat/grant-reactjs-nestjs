@@ -1,0 +1,48 @@
+.grant-card {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 10px;
+    width: 200px;
+    transition: background-color 0.3s;
+    position: relative;
+    border-radius: 20px;
+}
+
+.grant-card.hovered {
+    background-color: #f5f5f5;
+    border-color: #ccc;
+}
+
+.grant-header {
+    font-weight: bold;
+}
+
+.grant-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.feedback-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 20px;
+    z-index: 1000;
+    width: 80%;
+    max-width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.feedback-modal textarea {
+    width: 100%;
+    height: 80px;
+    margin-bottom: 10px;
+}
+
+.feedback-modal button {
+    width: 100%;
+}
