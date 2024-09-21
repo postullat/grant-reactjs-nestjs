@@ -6,6 +6,7 @@ export const GET_ALL_GRANTS = gql`
             id
             foundationName
             description
+            location
             grantName
             amount
             status
@@ -22,6 +23,7 @@ export const GET_NEW_MATCHED_GRANTS = gql`
             id
             foundationName
             description
+            location
             grantName
             amount
             status

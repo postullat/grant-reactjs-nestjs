@@ -15,6 +15,9 @@ export class Grant {
   description: string;
 
   @Field()
+  location: string;
+
+  @Field()
   amount: number;
 
   @Field()

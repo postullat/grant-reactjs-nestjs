@@ -12,12 +12,18 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DateFormatter from "./utils/DateFromatter";
 import StatusComponent from "./component/blocks/status/StatusComponent";
-
+import moment from 'moment';
+import numeral from "numeral";
 
 
 function App() {
-    const {loading: loadingMatched, error: errorMatched, data: dataMatched, refetch: refetchMatchedGrants} = useQuery(GET_NEW_MATCHED_GRANTS);
-    const {loading, error, data,  refetch: refetchAllGrants} = useQuery(GET_ALL_GRANTS);
+    const {
+        loading: loadingMatched,
+        error: errorMatched,
+        data: dataMatched,
+        refetch: refetchMatchedGrants
+    } = useQuery(GET_NEW_MATCHED_GRANTS);
+    const {loading, error, data, refetch: refetchAllGrants} = useQuery(GET_ALL_GRANTS);
 
     const handleGrantUpdate = async (id: string, status: string) => {
         await refetchMatchedGrants();
@@ -32,7 +38,7 @@ function App() {
     return (
 
         <div className="App">
-            <h2>New Matched Grants</h2>
+            <h2 className="new-grant-title">New Matched Grants</h2>
             <div className="grant-card-container">
                 {dataMatched.getAllNewMatches.map((grant: any) => (
                     <GrantCard
@@ -43,45 +49,48 @@ function App() {
                         deadline={grant.deadline}
                         status={grant.status}
                         description={grant.description}
+                        location={grant.location}
                         onUpdateGrant={handleGrantUpdate}/>
                 ))}
             </div>
 
-            <h2>Available Grants</h2>
-            <TableContainer component={Paper}>
-                <Table sx={{minWidth: 650}} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Foundation name</TableCell>
-                            <TableCell>Grant name</TableCell>
-                            <TableCell>Average amount</TableCell>
-                            <TableCell>Status</TableCell>
-                            <TableCell>Deadline</TableCell>
-                            <TableCell>Match date</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {data.getAllGrants.map((grant: any) => (
-                            <TableRow
-                                key={grant.id}
-                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                            >
-                                <TableCell component="th" scope="row">
-                                    {grant.foundationName}
-                                </TableCell>
-
-                                <TableCell>{grant.grantName}</TableCell>
-                                <TableCell>${grant.amount}</TableCell>
-                                <TableCell>
-                                    <StatusComponent status={grant.status}/>
-                                </TableCell>
-                                <TableCell><DateFormatter date={grant.deadline} /></TableCell>
-                                <TableCell><DateFormatter date={grant.matchDate} /></TableCell>
+            <div className="grant-table-container">
+                <h2 className="all-grant-title">Available Grants</h2>
+                <TableContainer className="grant-table" component={Paper}>
+                    <Table sx={{minWidth: 650}} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Foundation name</TableCell>
+                                <TableCell>Grant name</TableCell>
+                                <TableCell>Average amount</TableCell>
+                                <TableCell>Status</TableCell>
+                                <TableCell>Deadline</TableCell>
+                                <TableCell>Match date</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                        </TableHead>
+                        <TableBody>
+                            {data.getAllGrants.map((grant: any) => (
+                                <TableRow
+                                    key={grant.id}
+                                    sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                >
+                                    <TableCell component="th" scope="row">
+                                        {grant.foundationName}
+                                    </TableCell>
+
+                                    <TableCell>{grant.grantName}</TableCell>
+                                    <TableCell>{numeral(grant.amount).format('$0,0')}</TableCell>
+                                    <TableCell>
+                                        <StatusComponent status={grant.status}/>
+                                    </TableCell>
+                                    <TableCell><DateFormatter date={moment(grant.deadline).format('MMMM D')}/></TableCell>
+                                    <TableCell><DateFormatter date={moment(grant.matchDate).format('DD MMMM YYYY')}/></TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </div>
         </div>
     );
 }

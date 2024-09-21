@@ -14,6 +14,9 @@ export class Grant {
   @Prop()
   description: string;
 
+  @Prop()
+  location: string;
+
   @Prop({ required: true })
   amount: number;
 
